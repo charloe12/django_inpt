@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+
+{% include 'polls/head.html' %}
+
+</head>
+
+
+<body>
+    {% include 'polls/nav.html' %}
+
+    <header>
+        <div class="container header__container">
+            <div class="header__left">
+                <h1>Charging Cars Station Online</h1>
+                <p>A multi-network card giving you the very best charging experience possible, covering most charging
+                    stations across Morocco.</p>
+                <a href="pricing.php" class="btn btn-primary">Charge NOW</a>
+            </div>
+            <div class="header__right">
+                <div class="header__right-image">
+                    <img src="{% static 'images/car.svg' %}" alt="">
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <!--********************END HEADER*******************-->
+
+    <section class="about">
+        <div class="container about__container">
+            <div class="about__left">
+                <h1>About US</h1>
+                <p>
+                    SCARS is continuously updated with new functions and new charging stations are added daily, you
+                    should be able to find suitable charging stations, see prices, availability in real time and get
+                    info on how to start charging.
+                </p>
+                <a href="{% url 'about' %}" class="btn">Learn More</a>
+            </div>
+            <div class="about__right">
+                <article class="goals">
+                    <span class="goals__icon"><i class="bi bi-credit-card"></i></span>
+                    <h5>Pricing</h5>
+                    <p>You can charge your card from the site. the rest informations in the page pricing</p>
+
+                </article>
+                <article class="goals">
+                    <span class="goals__icon"><i class="bi bi-ev-station"></i></span>
+                    <h5>Charging</h5>
+                    <p>Best service to check the avaibility of the stations</p>
+
+                </article>
+                <article class="goals">
+                    <span class="goals__icon"><i class="bi bi-geo"></i></span>
+                    <h5>Mapping</h5>
+                    <p>All our stations locations and informations.</p>
+
+                </article>
+
+            </div>
+        </div>
+    </section>
+    <!--================END ABOUTUS=================-->
+
+    <section class="map">
+
+
+
+        <div class="container map__container">
+            <div class="map__left">
+                <h1>Our Stations Map</h1>
+                <p>Driving on electricity should be easy and then it must also be easy to find your way to the charging
+                    stations in morocco.<br>We who started SCARS ourselves experienced a need for an easy-to-navigate
+                    service with content that is both up to date and relevant.</p>
+                <a href="map.php" class="btn btn-primary">Ckeck NOW</a>
+            </div>
+
+            <div id="map" style='width: 100%; height: 60vh;'></div>
+        </div>
+    </section>
+
+    <!--================END MAP=================-->
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        var YOUR_MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY2hhcmxvZTEyIiwiYSI6ImNsNnNoZnkxeDA5bWkzZHFqNTRvcjF6aGEifQ.ZjkBlirZZ4UzTfZTImP5wg'
+
+
+
+
+        mapboxgl.accessToken = YOUR_MAPBOX_ACCESS_TOKEN;
+
+
+        navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+            enableHighAccuracy: true
+        })
+        function successLocation(position) {
+
+
+            setupMap([position.coords.longitude, position.coords.latitude])
+
+        }
+        function errorLocation() { }
+        function setupMap(center) {
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: center,
+                zoom: 4
+            })
+
+
+            const nav = new mapboxgl.NavigationControl();
+
+
+
+
+
+            const marker = new mapboxgl.Marker({
+
+                color: 'gray',
+                draggable: true
+            }).setLngLat(center).addTo(map);
+        }
+
+
+
+    </script>
+    {% include 'polls/footer.html' %}
+
+
+    <!--================END FOOTER=================-->
+
+
+
+
+</body>
+
+</html>

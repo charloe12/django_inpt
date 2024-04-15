@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html>
+
+{% include 'admin/header.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'admin/css/style.css' %}">
+
+</head>
+
+<body>
+    {% include 'admin/sidebar.html' %}
+
+    <style type="text/css">
+        .add-btn {
+            border: 1px solid #d7dbe6;
+            border-radius: 4px;
+            width: 160px;
+            font-size: 15px;
+            color: white;
+            background-color: #594ef7;
+            margin: 1rem;
+            padding: 1rem 1.5rem;
+
+        }
+
+        .people img {
+            width: 60px;
+            height: auto;
+            border-radius: unset;
+
+        }
+    </style>
+    <section id="inteface">
+        {% include 'admin/nav.html' %}
+        <h1 class="i-name">Stations</h1>
+        <div class="values">
+            <div class="val-box">
+                <i class="bi bi-ev-station"></i>
+                <div>
+                    <h3>{{ stations|length }}</h3>
+                    <span>Stations</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="add-btn text-uppercase my-4 mx-5 p-3">
+            <a href="{% url 'addStation' %}" style="text-decoration: none;color: white;">Add Stations</a>
+        </div>
+        <div class="board">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Address</td>
+                        <td>Latitude</td>
+                        <td>Longitude</td>
+                        <td>Available</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for station in stations %}
+                    <tr>
+                        <td class="people">
+                            <img src="{{ station.image.url }}">
+                            <div class="people-de">
+                                <h5>{{ station.city }}</h5>
+                            </div>
+                        </td>
+                        <td class="people-des">
+                            <h5>{{ station.address }}</h5>
+                        </td>
+                        <td class="role">
+                            <p>{{ station.latitude }}</p>
+                        </td>
+                        <td class="role">
+                            <p>{{ station.longitude }}</p>
+                        </td>
+                        <td class="role">
+                            <p>{{ station.available }}</p>
+                        </td>
+                        <td class="edit"><a href="{% url 'editStation' station.id %}">Edit</a></td>
+                        <td class="delete"><a href="{% url 'deleteStation' station.id %}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <script>
+        $('#menu-btn').click(function () {
+            $('#menu').toggleClass("active");
+        })
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
